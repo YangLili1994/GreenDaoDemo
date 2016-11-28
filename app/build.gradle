@@ -1,0 +1,43 @@
+
+apply plugin: 'com.android.application'
+//然后在module的gradle文件中添加greenDAO的插件，并引入相关类库
+apply plugin: 'org.greenrobot.greendao'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.0"
+    defaultConfig {
+        applicationId "com.hzyanglili1.greendaodemo"
+        minSdkVersion 15
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    //greendao设置
+    greendao{
+        //schemaVersion表示数据库版本号，可进行数据库更新
+        schemaVersion 3
+        //dao的包名，包名默认是entity所在的包
+        daoPackage 'com.hzyanglili1.greendaodemo.gen'
+        //targetGenDir表示greenDAO生成的DAOMaster和DaoSession的位置
+        targetGenDir 'src/main/java'
+    }
+}
+dependencies {
+    //引入类库
+    compile 'org.greenrobot:greendao:3.2.0'
+
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support:appcompat-v7:25.0.1'
+    testCompile 'junit:junit:4.12'
+}
